@@ -1,0 +1,23 @@
+language: rust
+osx_image: xcode11.3
+
+git:
+  submodules: true
+  depth: 5
+
+os:
+  - osx
+
+rust:
+  - stable
+
+cache: cargo
+
+before_script:
+  - sudo gem install xcpretty
+
+script:
+  - xcodebuild test -scheme XiEditor | xcpretty -s && exit ${PIPESTATUS[0]}
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
